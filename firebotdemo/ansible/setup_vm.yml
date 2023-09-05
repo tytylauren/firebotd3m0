@@ -1,0 +1,19 @@
+---
+- name: Provision VM using Libvirt
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Ensure Libvirt provider
+      command: vagrant plugin list | grep vagrant-libvirt
+      ignore_errors: true
+      register: libvirt_plugin
+
+    - name: Install Libvirt plugin
+      command: vagrant plugin install vagrant-libvirt
+      when: libvirt_plugin.rc != 0
+
+    - name: Run Vagrant up
+      command: vagrant up --provider=libvirt
+      args:
+        chdir: /firebotdemo/

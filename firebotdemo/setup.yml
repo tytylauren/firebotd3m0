@@ -1,0 +1,42 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Update and upgrade packages
+      dnf:
+        name: '*'
+        state: latest
+
+    - name: Install necessary dependencies
+      dnf:
+        name:
+          - git
+          - curl
+          - gcc-c++
+          - make
+        state: present
+
+    - name: Install Node.js and npm for ReactJS development
+      dnf:
+        name:
+          - nodejs
+          - npm
+        state: present
+
+    - name: Install Python and pip for Django
+      dnf:
+        name:
+          - python3
+          - python3-pip
+        state: present
+
+    - name: Install Django and Django REST framework
+      pip:
+        name:
+          - django
+          - djangorestframework
+        state: present
+
+
+
+          

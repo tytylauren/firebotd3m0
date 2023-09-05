@@ -1,0 +1,27 @@
+    ---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Create ReactJS App
+      command:
+        cmd: npx create-react-app DroneReactDemo
+        chdir: /FBD/
+      become: no
+      become_user: vagrant
+      args:
+        creates: /FBD/DroneReactDemo
+
+    - name: Create Django Project
+      command:
+        cmd: django-admin startproject DroneDjangoDemo
+        chdir: /FBD/
+      become: no
+      become_user: vagrant
+      args:
+        creates: /FBD/DroneDjangoDemo
+
+    - name: Make start_react.sh executable
+      command: chmod +x /vagrant/start_react.sh
+
+    - name: Make start_django.sh executable
+      command: chmod +x /vagrant/start_django.sh
