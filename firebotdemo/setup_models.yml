@@ -1,0 +1,19 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  
+- name: Create Django Models
+      command: python manage.py makemigrations
+      args:
+        chdir: /FBD/DjangoDroneDemo
+      become_user: vagrant
+      become: yes
+
+    - name: Apply Database Migrations
+      command: python manage.py migrate
+      args:
+        chdir: /FBD/DjangoDroneDemo
+      become_user: vagrant
+      become: yes
+      
