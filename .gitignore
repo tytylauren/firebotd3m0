@@ -1,0 +1,12 @@
+FBLdemo/fbl_backend/PX4-Autopilot
+FBLdemo/fbl_frontend/node_modules
+FBLdemo/fbl_backend/venv
+*.pyc
+*.swp
+*.swo
+.project
+.pydevproject
+*#
+*#*#
+*.#*
+venv/

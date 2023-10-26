@@ -1,0 +1,136 @@
+#!/bin/bash
+
+# Function to check if a command exists
+command_exists () {
+    type "$1" &> /dev/null ;
+}
+
+cd .. 
+cd ..
+
+# Update package list and install prerequisites
+sudo apt update
+
+# Check for Python3 and install/upgrade if necessary
+if ! command_exists python3; then
+    sudo apt install -y python3
+else
+    sudo apt upgrade -y python3
+fi
+
+# Check for Node.js and install if necessary
+if ! command_exists node; then
+    sudo apt install -y nodejs
+fi
+
+# Check for npm and install if necessary
+if ! command_exists npm; then
+    sudo apt install -y npm
+fi
+
+# Check for python3-venv and install if necessary
+if ! command_exists python3-venv; then
+    sudo apt install -y python3-venv
+fi
+
+
+# Upgrade Node.js and npm to latest versions
+sudo npm install -g n
+sudo n stable
+
+# Navigate to the root directory
+cd FBLProjects/FBLdemo
+
+# Create and activate Python virtual environment
+python3 -m venv FBLvenv
+source FBLvenv/bin/activate
+
+# Check for pip3 and install if necessary
+if ! command_exists pip3; then
+    sudo apt install -y python3-pip
+fi
+
+# Install Django
+pip install --upgrade pip
+pip install --upgrade django
+pip install --upgrade djangorestframework
+
+#install Create React App CLI
+npm install -g create-react-app
+
+# Create Django project
+sudo django-admin startproject DjangoFBL
+python manage.py startapp drone_app
+python manage.py migrate
+
+# Create React app
+create-react-app fbl_react_demo
+
+# Setup React App
+sudo ./react_setup.sh
+
+#Setup Others
+sudo apt install git -y
+
+# Gazebo setup
+sudo apt update
+sudo apt-get update
+sudo apt-get install lsb-release wget gnupg
+sudo wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
+sudo apt-get update
+sudo apt-get install gz-garden
+
+git clone https://github.com/PX4/PX4-Autopilot.git --recursive
+
+echo "Installing web_video_server for video streaming..."
+sudo apt-get install ros-melodic-web-video-server
+
+echo "Installing ROS Melodic..."
+sudo apt update
+sudo apt install ros-melodic-desktop-full
+
+echo "Initializing ROS..."
+echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+
+echo "Installing Gazebo ROS Packages..."
+sudo apt-get install ros-melodic-gazebo-ros-pkgs ros-melodic-gazebo-ros-control
+
+
+echo "Installing web_video_server for video streaming..."
+sudo apt-get install ros-melodic-web-video-server
+
+#Setup Django
+sudo ./django_setup.sh
+
+# Get QGC
+
+sudo apt install gstreamer1.0-plugins-bad gstreamer1.0-libav -y
+wget https://s3-us-west-2.amazonaws.com/qgroundcontrol/latest/QGroundControl.AppImage
+chmod +x QGroundControl.AppImage
+
+# Output success message
+echo "Python virtual environment, Django project, and React app have been successfully created."
+
+# start
+cd DjangoFBL
+python manage.py runserver 
+cd..
+cd PX4-Autopilot
+HEADLESS=1 make px4_sitl gz_x500_vision
+cd ..
+
+roslaunch gazebo_ros camera.launch
+roslaunch gazebo_ros camera.launch
+rosrun web_video_server web_video_server
+
+cd fbl_react_demo
+npm start
+
+
+
+
+
+
+

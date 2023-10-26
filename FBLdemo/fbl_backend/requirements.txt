@@ -1,0 +1,8 @@
+Django
+djangorestframework
+mavsdk
+aioconsole
+pyserial
+pymavlink
+catkin_pkg
+django-cors-headers

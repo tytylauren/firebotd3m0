@@ -1,0 +1,92 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f4f4f4; 
+  padding: 20px;
+}
+
+.dropdown {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.dropbtn {
+  background-color: #3498db;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.drone-info {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 20px;
+    width: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content button {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.rounded-button {
+  background-color: #3498db;
+  color: white;
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  width: 100%; /* Make buttons take full width of their container */
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  width: 100%; /* Take full width of the parent */
+  justify-items: center;
+}
+
+/* Media query for larger screens */
+@media (min-width: 768px) {
+  .grid-container {
+    width: 80%; /* Adjust width for larger screens */
+  }
+}
+
+.moving-background {
+  animation: moveBackground 5s linear infinite;
+  background-color: #f3f3f3;
+  background-image: linear-gradient(315deg, #f3f3f3 0%, #e7e7e7 74%);
+}
+
+@keyframes moveBackground {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
