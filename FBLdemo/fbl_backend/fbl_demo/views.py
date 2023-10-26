@@ -19,6 +19,6 @@ def launch_simulation(request):
    
 
     if request.method == "POST":
-        subprocess.call(["/home/firebot/FBLProjects/FBLdemo/fbl_backend/launch.sh"])
+        subprocess.Popen(["/home/firebot/FBLProjects/FBLdemo/fbl_backend/launch.sh"], close_fds=True)
         return JsonResponse({"status": "Simulation started"})
    
