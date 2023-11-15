@@ -1,6 +1,9 @@
+# fbl_demo/urls.py
 from django.urls import path
-from . import views
+from .views import DroneListCreateView, launch_simulation
 
 urlpatterns = [
-    path('launch_simulation/', views.launch_simulation, name='launch_simulation'),
+    path('drones/', DroneListCreateView.as_view(), name='drone-list-create'),
+    path('launch_simulation/', launch_simulation, name='launch_simulation'),
 ]
+
