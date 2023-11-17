@@ -4,6 +4,7 @@ from .models import Drone
 from rest_framework import status
 from rest_framework.test import APIClient
 import json
+import asyncio
 
 class DroneModelTests(TestCase):
     def setUp(self):
@@ -55,5 +56,44 @@ class DroneApiTests(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn("Simulation started", response.content.decode())
 
-    # Additional tests for other functionalities and edge cases
+    def test_ground_station_status(self):
+        """Test retrieving the ground station status."""
+        response = self.client.get(reverse('ground_station_status'))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn("ground_station_status", json.loads(response.content))
+
+    def test_drone_connection_status(self):
+        """Test retrieving the drone connection status."""
+        response = self.client.get(reverse('drone_connection_status'))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn("connection_status", json.loads(response.content))
+
+    def test_arm_disarm_drone_mavsdk(self):
+        """Test arming and disarming the drone using MAVSDK."""
+        arm_response = self.client.post(reverse('arm_drone_mavsdk'))
+        self.assertEqual(arm_response.status_code, status.HTTP_200_OK)
+        self.assertIn("Drone armed with mavsdk", arm_response.content.decode())
+
+        disarm_response = self.client.post(reverse('disarm_drone_mavsdk'))
+        self.assertEqual(disarm_response.status_code, status.HTTP_200_OK)
+        self.assertIn("Drone disarmed with mavsdk", disarm_response.content.decode())
+
+    def test_takeoff_land_drone_mavsdk(self):
+        """Test takeoff and landing of the drone using MAVSDK."""
+        takeoff_response = self.client.post(reverse('takeoff_drone_mavsdk'))
+        self.assertEqual(takeoff_response.status_code, status.HTTP_200_OK)
+        self.assertIn("Drone taking off with mavsdk", takeoff_response.content.decode())
+
+        land_response = self.client.post(reverse('land_drone_mavsdk'))
+        self.assertEqual(land_response.status_code, status.HTTP_200_OK)
+        self.assertIn("Drone landing with mavsdk", land_response.content.decode())
+
+    def test_drone_telemetry(self):
+        """Test retrieving drone telemetry data."""
+        response = self.client.get(reverse('drone_telemetry'))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        telemetry_data = json.loads(response.content)
+        self.assertIn("battery", telemetry_data)
+        self.assertIn("gps_info", telemetry_data)
+        self.assertIn("flight_mode", telemetry_data)
 
