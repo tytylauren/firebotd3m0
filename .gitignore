@@ -1,6 +1,16 @@
 FBLdemo/fbl_backend/PX4-Autopilot
 FBLdemo/fbl_frontend/node_modules
 FBLdemo/fbl_backend/venv
+FBLdemo/logs
+FBLdemo/OLD
+FBLdemo/mavlink-router
+FBLdemo/rust-mavlink
+FBLdemo/mavlink-camera-manager-t3.12.2.tar.gz
+FBLdemo/mavlink-camera-manager-t3.12.2
+FBLdemo/views.py
+FBLdemo/fbl_backend/gz-sensors
+FBLdemo/fbl_backend/logs
+FBLdemo/fbl_backend/QGroundControl.AppImage
 *.pyc
 *.swp
 *.swo
